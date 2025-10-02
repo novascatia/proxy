@@ -286,7 +286,7 @@ local cmd = {
         usage = '/depo <`2amount``>',
         label = 7188
     },
-    ["dw"] = {
+    ["wl"] = {
         func = function(num)
             local count = tonumber(num)
             if count then
@@ -294,13 +294,13 @@ local cmd = {
                 drop(242, count, facing, x, y)
                 return
             end
-            console("Usage : /dw `9<amount>", 1)
+            console("Usage : /wl `9<amount>", 1)
         end,
         desc = "Shortcut Dropping World Lock (WL)",
-        usage = "/dw <`2amount``>",
+        usage = "/wl <`2amount``>",
         label = 242
     },
-    ["dd"] = {
+    ["dl"] = {
         func = function(num)
             local count = tonumber(num)
             if count then
@@ -308,13 +308,13 @@ local cmd = {
                 drop(1796, count, facing, x, y)
                 return
             end
-            console("Usage : /dd `9<amount>", 1)
+            console("Usage : /dl `9<amount>", 1)
         end,
         desc = "Shortcut Dropping Diamond Lock (DL)",
-        usage = "/dd <`2amount``>",
+        usage = "/dl <`2amount``>",
         label = 1796
     },
-    ["db"] = {
+    ["bgl"] = {
         func = function(num)
             local count = tonumber(num)
             if count then
@@ -322,10 +322,10 @@ local cmd = {
                 drop(7188, count, facing, x, y)
                 return
             end
-            console("Usage : /db `9<amount>", 1)
+            console("Usage : /bgl `9<amount>", 1)
         end,
         desc = "Shortcut Dropping Blue Gem Lock (BGL)",
-        usage = "/db <`2amount``>",
+        usage = "/bgl <`2amount``>",
         label = 7188
     },
     ['pf'] = {
@@ -460,7 +460,7 @@ add_quick_exit|
     }
 }
 
-local cmd_order = {"sc", "wp", "drop", "dw", "dd", "db", "da","depo","wd", "cd","dall", "rainbows","logspin", "spammer","pf","ft"}
+local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "da","depo","wd", "cd","dall", "rainbows","logspin", "spammer","pf","ft"}
 
 cmdcount = function()
     local a = 0
@@ -564,7 +564,11 @@ function onvariant(v)
     end
     if v[0] == "OnTalkBubble" then
         if v[2]:find("spun the wheel and got") then
-            local num_str = v[2]:match("spun the wheel and got `w(%d+)!")
+            -- Dapatkan seluruh pesan asli
+            local original_message = v[2]
+            
+            -- Ekstrak angka spin
+            local num_str = original_message:match("spun the wheel and got `w(%d+)!")
             local num = tonumber(num_str)
             local reme_sum = 0
             
@@ -579,20 +583,20 @@ function onvariant(v)
 
             local reme_display = string.format("[ REME : %d ]", reme_sum)
             
-            pname = getplayers(v[1]):gsub("%[.-%]", "")
+            pname = getplayers(v[1]) or "Unknown"
             
-            -- Menambahkan tag REME ke bubble chat
+            -- Mencegat dan memodifikasi bubble chat dengan REME, mempertahankan bagian teks asli
             SendVarlist(
                 {
                     [0] = "OnTalkBubble",
                     [1] = v[1],
-                    [2] = string.format("`7[`2 REAL ``]`` %s `w%d! %s", pname, num, reme_display),
+                    [2] = original_message:gsub("!", "! " .. reme_display), -- Sisipkan REME setelah '!'
                     [3] = v[3],
                     netid = -1
                 }
             )
             
-            -- Menambahkan ke logspin
+            -- Menambahkan ke logspin (menggunakan data yang sudah dibersihkan untuk konsistensi)
             table.insert(
                 logspin,
                 {
