@@ -576,7 +576,7 @@ function onvariant(v)
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
-                [2] = v[2] .. " `7[`4REME : `9" .. tostring(reme_result) .. "``7]",
+                [2] = v[2] .. " `7[`4REME : `9" .. tostring(reme_result) .. "```7]",
                 [3] = v[3],
                 netid = -1
             })
@@ -654,7 +654,7 @@ set_default_color|`0
 add_label_with_icon|big|Nov4 Store Helper!|left|7188| 
 add_smalltext|https://dsc.gg/nov4community|left| 
 add_spacer|small|
-add_label_with_icon|small| What's New? PATCH : [`416/06/2025]``]|left|6124|
+add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``]|left|6124|
 add_spacer|small|
 add_smalltext|[+] Check command /sc|left|
 add_smalltext|[+] Added [ REME ] Counter|left| 
