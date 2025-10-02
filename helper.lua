@@ -283,7 +283,7 @@ local cmd = {
             console('Usage : /wd `9<amount>``',1)
         end,
         desc = 'Deposit Blue Gem Lock (BGL) to the Bank',
-        usage = '/depo <`2amount``>',
+        usage = "/depo <`2amount``>",
         label = 7188
     },
     ["wl"] = {
@@ -564,16 +564,13 @@ function onvariant(v)
     end
     if v[0] == "OnTalkBubble" then
         if v[2]:find("spun the wheel and got") then
-            -- Dapatkan seluruh pesan asli
             local original_message = v[2]
             
-            -- Ekstrak angka spin
             local num_str = original_message:match("spun the wheel and got `w(%d+)!")
             local num = tonumber(num_str)
             local reme_sum = 0
             
             if num and num >= 0 then
-                -- Menghitung REME: Jumlah digit
                 local temp_num = num
                 while temp_num > 0 do
                     reme_sum = reme_sum + (temp_num % 10)
@@ -581,22 +578,26 @@ function onvariant(v)
                 end
             end
 
-            local reme_display = string.format("[ REME : %d ]", reme_sum)
+            local reme_display = string.format(" [ REME : %d ]", reme_sum)
             
             pname = getplayers(v[1]) or "Unknown"
             
-            -- Mencegat dan memodifikasi bubble chat dengan REME, mempertahankan bagian teks asli
+            -- Sisipkan REME display setelah tanda seru di pesan asli
+            -- Menghilangkan "and got `w%d!" dan menggantinya dengan "and got `w%d! [ REME : %d ]"
+            local modified_message = original_message:gsub("spun the wheel and got (`w%d+!)", "spun the wheel and got %1" .. reme_display)
+
+            -- Kirim pesan yang dimodifikasi
             SendVarlist(
                 {
                     [0] = "OnTalkBubble",
                     [1] = v[1],
-                    [2] = original_message:gsub("!", "! " .. reme_display), -- Sisipkan REME setelah '!'
+                    [2] = modified_message,
                     [3] = v[3],
                     netid = -1
                 }
             )
             
-            -- Menambahkan ke logspin (menggunakan data yang sudah dibersihkan untuk konsistensi)
+            -- Menambahkan ke logspin
             table.insert(
                 logspin,
                 {
