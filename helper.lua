@@ -576,7 +576,7 @@ function onvariant(v)
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
-                [2] = v[2] .. " `7[`4REME : `9" .. tostring(reme_result) .. "```7]",
+                [2] = v[2] .. " `7[`4REME : `9" .. tostring(reme_result) .. "```7 ]",
                 [3] = v[3],
                 netid = -1
             })
