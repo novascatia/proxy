@@ -576,7 +576,7 @@ function onvariant(v)
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
-                [2] = v[2] .. " `7[`2REME : `w" .. tostring(reme_result) .. "``]",
+                [2] = v[2] .. " `7[`4REME : `9" .. tostring(reme_result) .. "``7]",
                 [3] = v[3],
                 netid = -1
             })
@@ -656,10 +656,10 @@ add_smalltext|https://dsc.gg/nov4community|left|
 add_spacer|small|
 add_label_with_icon|small| What's New? PATCH : [`416/06/2025]``]|left|6124|
 add_spacer|small|
-add_smalltext|[+] Change Many Command! Check at /sc|left|
-add_smalltext|[+] Now Free for everyone!|left| 
-add_smalltext|[+] Command `1/dall``|left|
-add_smalltext|[+] Lock Collect Notifier is now always ON (WL/DL/BGL only)|left|
+add_smalltext|[+] Check command /sc|left|
+add_smalltext|[+] Added [ REME ] Counter|left| 
+add_smalltext|[~] Change /db, /dd, /dw to /bgl, /dl, /wl|left|
+add_smalltext|[+] Lock Collect + Drop Notifier will always active.|left|
 add_spacer|small|
 add_smalltext|`2Creator`` : `1@novascatia|left|
 add_smalltext|`2Donate World`` : `1DEXT|left|
