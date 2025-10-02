@@ -654,7 +654,7 @@ set_default_color|`0
 add_label_with_icon|big|Nov4 Store Helper!|left|7188| 
 add_smalltext|https://dsc.gg/nov4community|left| 
 add_spacer|small|
-add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``]|left|6124|
+add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``|left|6124|
 add_spacer|small|
 add_smalltext|[+] Check command /sc|left|
 add_smalltext|[+] Added [ REME ] Counter|left| 
