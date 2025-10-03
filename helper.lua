@@ -182,7 +182,7 @@ function takelock(x,y)
     for _, object in pairs(GetObjects()) do
         if object.pos_x >= pos1.x and object.pos_x <= pos2.x then
             if object.pos_y >= pos1.y and object.pos_y <= pos2.y then
-                if object.id == 242 or object.id == 7188 or object.id == 1796 or object.id == 16990 then
+                if object.id == 242 or object.id == 7188 or object.id == 1796 or object.id == 17240 then
                     SendPacketRaw({type = 11,int_data = object.oid,pos_x = GetLocal().pos_x,pos_y = GetLocal().pos_y})
                     Sleep(60)
                 end
@@ -326,28 +326,51 @@ local cmd = {
     },
     ["wx"] = {
         func = function(params)
-            local total_bgl, multiplier = params:match("^(%d+)x(%d+)$")
-            if not total_bgl or not multiplier then
+            local total_bgl_str, multiplier_str = params:match("^(%d+)x(%d+)$")
+            if not total_bgl_str or not multiplier_str then
                 console("Usage : /wx `9<total_bgl>x<multiplier>", 1)
                 return
             end
-            total_bgl = tonumber(total_bgl)
-            multiplier = tonumber(multiplier)
+            local total_bgl = tonumber(total_bgl_str)
+            local multiplier = tonumber(multiplier_str)
             local result = total_bgl * multiplier
-            if getinv(7188) < result then
-                console("`4BGL not enough " .. result .. " BGL!", 1)
+            if result <= 0 then return end
+            
+            local abso_needed = math.floor(result / 100)
+            local bgl_needed = result % 100
+            local abso_have = getinv(17240)
+            local bgl_have = getinv(7188)
+            local facing, x, y = GetLocal().facing_left and 48 or 32, GetLocal().pos_x, GetLocal().pos_y
+
+            if abso_needed > 0 and abso_have >= abso_needed and bgl_have >= bgl_needed then
+                RunThread(function()
+                    if abso_needed > 0 then
+                        drop(17240, abso_needed, facing, x, y)
+                        Sleep(150)
+                    end
+                    if bgl_needed > 0 then
+                        drop(7188, bgl_needed, facing, x, y)
+                        Sleep(150)
+                    end
+                    local win_message = "Player won " .. result .. " BGL equivalent."
+                    SendPacket(2, "action|input\n|text|" .. win_message)
+                end)
                 return
             end
-            local facing, x, y = GetLocal().facing_left and 48 or 32, GetLocal().pos_x, GetLocal().pos_y
-            state(facing, x, y)
-            SendPacket(2, string.format([[action|dialog_return
-dialog_name|drop_item
-itemID|%d|
-count|%d]], 7188, result))
-            local win_message = "`9[`4@Nov4`9] Dropped " .. result .. " Blue Gem Lock."
-            SendPacket(2, "action|input\n|text|" .. win_message)
+
+            if bgl_have >= result then
+                RunThread(function()
+                    drop(7188, result, facing, x, y)
+                    Sleep(150)
+                    local win_message = "Player won " .. result .. " Blue Gem Lock."
+                    SendPacket(2, "action|input\n|text|" .. win_message)
+                end)
+                return
+            end
+            
+            console("`4Lock tidak mencukupi untuk drop " .. result .. " BGL equivalent!", 1)
         end,
-        desc = "Auto drop BGL with multiplier and custom message.",
+        desc = "Auto drop BGL/ABSO with multiplier and custom message.",
         usage = "/wx <`2total_bgl``>x<`2multiplier``>",
         label = 7188
     },
@@ -482,7 +505,7 @@ add_quick_exit|
     }
 }
 
-local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "wx", "da", "depo", "wd", "cd", "dall", "rainbows", "logspin", "spammer", "pf", "ft"}
+local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "wx", "abso", "depo", "wd", "cd", "dall", "rainbows", "logspin", "spammer", "pf", "ft"}
 
 cmdcount = function()
     local a = 0
@@ -644,7 +667,7 @@ webhookpayloads = string.format([[
     {
       "author": {
         "name": "Nov4 Eye",
-        "icon_url": "https://cdn.discordapp.com/attachments/1373013808468983858/1374798479565787156/Proyek_Baru_41_5140F36.png?ex=682f5c5c&is=682e0adc&hm=c03e43069dfbb39393e1d0348e341cbf6913c6f5aac4cddfa9fa2d9b5fd48d92&"
+        "icon_url": "[https://cdn.discordapp.com/attachments/1373013808468983858/1374798479565787156/Proyek_Baru_41_5140F36.png?ex=682f5c5c&is=682e0adc&hm=c03e43069dfbb39393e1d0348e341cbf6913c6f5aac4cddfa9fa2d9b5fd48d92](https://cdn.discordapp.com/attachments/1373013808468983858/1374798479565787156/Proyek_Baru_41_5140F36.png?ex=682f5c5c&is=682e0adc&hm=c03e43069dfbb39393e1d0348e341cbf6913c6f5aac4cddfa9fa2d9b5fd48d92)&"
       },
       "title": "GTFY Helper Succesfully Runned!",
       "fields": [
@@ -665,7 +688,7 @@ webhookpayloads = string.format([[
         }
       ],
       "image": {
-        "url": "https://cdn.discordapp.com/attachments/1373013808468983858/1374798479800406179/Proyek_Baru_79_4712913.png?ex=682f5c5c&is=682e0adc&hm=b795f528c95c13d49a9e89b1bbeb2f9467abf858319f1ac81fb1e99311d3883c&"
+        "url": "[https://cdn.discordapp.com/attachments/1373013808468983858/1374798479800406179/Proyek_Baru_79_4712913.png?ex=682f5c5c&is=682e0adc&hm=b795f528c95c13d49a9e89b1bbeb2f9467abf858319f1ac81fb1e99311d3883c](https://cdn.discordapp.com/attachments/1373013808468983858/1374798479800406179/Proyek_Baru_79_4712913.png?ex=682f5c5c&is=682e0adc&hm=b795f528c95c13d49a9e89b1bbeb2f9467abf858319f1ac81fb1e99311d3883c)&"
       },
       "color": 16777215
     }
@@ -679,7 +702,7 @@ end)
 local dialoggazzete = [[
 set_default_color|`0
 add_label_with_icon|big|Nov4 Store Helper!|left|7188| 
-add_smalltext|https://dsc.gg/nov4community|left| 
+add_smalltext|[https://dsc.gg/nov4community](https://dsc.gg/nov4community)|left| 
 add_spacer|small|
 add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``]|left|6124|
 add_spacer|small|
