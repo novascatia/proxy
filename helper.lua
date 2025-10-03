@@ -620,7 +620,7 @@ function onvariant(v)
             local num = tonumber(string.match(v[2]:gsub("`.", ""), "(%d+)%!"))
             local reme_result = calculateReme(num)
             pname = getplayers(v[1]):gsub("%[.-%]", "")
-            SendVarlist({[0] = "OnNameChanged", [1] = pname .. "[`1 REME : " .. tostring(reme_result) .. "``]", netid = v[1]})
+            SendVarlist({[0] = "OnNameChanged", [1] = pname .. "[`1 REME : " .. tostring(reme_result) .. "`` ]", netid = v[1]})
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
