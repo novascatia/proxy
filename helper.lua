@@ -344,7 +344,7 @@ local cmd = {
 dialog_name|drop_item
 itemID|%d|
 count|%d]], 7188, result))
-            local win_message = "Player won " .. result .. " of Blue Gem Lock."
+            local win_message = "`9[`4@Nov4`9] Dropped " .. result .. " Blue Gem Lock."
             SendPacket(2, "action|input\n|text|" .. win_message)
         end,
         desc = "Auto drop BGL with multiplier and custom message.",
