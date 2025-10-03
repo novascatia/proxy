@@ -324,6 +324,33 @@ local cmd = {
         usage = "/bgl <`2amount``>",
         label = 7188
     },
+    ["wx"] = {
+        func = function(params)
+            local total_bgl, multiplier = params:match("^(%d+)x(%d+)$")
+            if not total_bgl or not multiplier then
+                console("Usage : /wx `9<total_bgl>x<multiplier>", 1)
+                return
+            end
+            total_bgl = tonumber(total_bgl)
+            multiplier = tonumber(multiplier)
+            local result = total_bgl * multiplier
+            if getinv(7188) < result then
+                console("`4BGL not enough " .. result .. " BGL!", 1)
+                return
+            end
+            local facing, x, y = GetLocal().facing_left and 48 or 32, GetLocal().pos_x, GetLocal().pos_y
+            state(facing, x, y)
+            SendPacket(2, string.format([[action|dialog_return
+dialog_name|drop_item
+itemID|%d|
+count|%d]], 7188, result))
+            local win_message = "Player won " .. result .. " of Blue Gem Lock."
+            SendPacket(2, "action|input\n|text|" .. win_message)
+        end,
+        desc = "Auto drop BGL with multiplier and custom message.",
+        usage = "/wx <`2total_bgl``>x<`2multiplier``>",
+        label = 7188
+    },
     ['pf'] = {
         func = function()
             pullwrench = not pullwrench
@@ -455,7 +482,7 @@ add_quick_exit|
     }
 }
 
-local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "da","depo","wd", "cd","dall", "rainbows","logspin", "spammer","pf","ft"}
+local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "wx", "da", "depo", "wd", "cd", "dall", "rainbows", "logspin", "spammer", "pf", "ft"}
 
 cmdcount = function()
     local a = 0
@@ -572,11 +599,11 @@ function onvariant(v)
             local num = tonumber(string.match(v[2]:gsub("`.", ""), "(%d+)%!"))
             local reme_result = calculateReme(num)
             pname = getplayers(v[1]):gsub("%[.-%]", "")
-            SendVarlist({[0] = "OnNameChanged", [1] = pname .. "[`1 REME : " .. tostring(reme_result) .. "`` ]", netid = v[1]})
+            SendVarlist({[0] = "OnNameChanged", [1] = pname .. " [`1 REME : " .. tostring(reme_result) .. "``]", netid = v[1]})
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
-                [2] = v[2] .. " `7[ `4REME : `9" .. tostring(reme_result) .. "```7 ]",
+                [2] = v[2] .. " `7[`2REME : `w" .. tostring(reme_result) .. "``]",
                 [3] = v[3],
                 netid = -1
             })
@@ -654,12 +681,11 @@ set_default_color|`0
 add_label_with_icon|big|Nov4 Store Helper!|left|7188| 
 add_smalltext|https://dsc.gg/nov4community|left| 
 add_spacer|small|
-add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``|left|6124|
+add_label_with_icon|small| What's New? PATCH : [`416/06/2025]``]|left|6124|
 add_spacer|small|
-add_smalltext|[+] Check command /sc|left|
-add_smalltext|[+] Added [ REME ] Counter|left| 
-add_smalltext|[~] Change /db, /dd, /dw to /bgl, /dl, /wl|left|
-add_smalltext|[+] Lock Collect + Drop Notifier will always active.|left|
+add_smalltext|[+] Change Many Command! Check at /sc|left|
+add_smalltext|[+] Lock Collect Notifier is now always ON|left|
+add_smalltext|[+] Auto calculate x for leme or reme use /wx (bet) (x)|left| 
 add_spacer|small|
 add_smalltext|`2Creator`` : `1@novascatia|left|
 add_smalltext|`2Donate World`` : `1DEXT|left|
