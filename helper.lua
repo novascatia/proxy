@@ -365,7 +365,7 @@ count|%d]], 7188, result))
             local count = tonumber(num)
             if count then
                 local facing, x, y = GetLocal().facing_left and 48 or 32, GetLocal().pos_x, GetLocal().pos_y
-                drop(16990, count, facing, x, y)
+                drop(17240, count, facing, x, y)
                 return
             end
             console("Usage : /da `9<amount>", 1)
