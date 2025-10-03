@@ -324,11 +324,11 @@ local cmd = {
         usage = "/bgl <`2amount``>",
         label = 7188
     },
-    ["wx"] = {
+    ["x"] = {
         func = function(params)
             local total_bgl_str, multiplier_str = params:match("^(%d+)x(%d+)$")
             if not total_bgl_str or not multiplier_str then
-                console("Usage : /wx `9<total_bgl>x<multiplier>", 1)
+                console("Usage : /x `9<total_bgl>x<multiplier>", 1)
                 return
             end
             local total_bgl = tonumber(total_bgl_str)
@@ -360,8 +360,6 @@ local cmd = {
                 RunThread(function()
                     drop(7188, result, facing, x, y)
                     Sleep(150)
-                    local win_message = "Player won " .. result .. " Blue Gem Lock."
-                    SendPacket(2, "action|input\n|text|" .. win_message)
                 end)
                 return
             end
@@ -369,7 +367,7 @@ local cmd = {
             console("`4Lock tidak mencukupi untuk drop " .. result .. " BGL equivalent!", 1)
         end,
         desc = "Auto drop BGL/ABSO with multiplier and custom message.",
-        usage = "/wx <`2total_bgl``>x<`2multiplier``>",
+        usage = "/x <`2total_bgl``>x<`2multiplier``>",
         label = 7188
     },
     ['pf'] = {
@@ -503,7 +501,7 @@ add_quick_exit|
     }
 }
 
-local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "wx", "abso", "depo", "wd", "cd", "dall", "rainbows", "logspin", "spammer", "pf", "ft"}
+local cmd_order = {"sc", "wp", "drop", "wl", "dl", "bgl", "x", "abso", "depo", "wd", "cd", "dall", "rainbows", "logspin", "spammer", "pf", "ft"}
 
 cmdcount = function()
     local a = 0
@@ -706,7 +704,7 @@ add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``]|left|6124|
 add_spacer|small|
 add_smalltext|[+] Check /sc to see commands|left|
 add_smalltext|[+] Lock Collect Notifier is now always ON|left|
-add_smalltext|[+] Auto calculate x for leme or reme use /wx (bet) (x)|left| 
+add_smalltext|[+] Auto calculate x for leme or reme use /x (bet) (x)|left| 
 add_spacer|small|
 add_smalltext|`2Creator`` : `1@novascatia|left|
 add_smalltext|`2Donate World`` : `1DEXT|left|
