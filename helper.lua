@@ -352,8 +352,6 @@ local cmd = {
                         drop(7188, bgl_needed, facing, x, y)
                         Sleep(150)
                     end
-                    local win_message = "Player won " .. result .. " BGL equivalent."
-                    SendPacket(2, "action|input\n|text|" .. win_message)
                 end)
                 return
             end
