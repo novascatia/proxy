@@ -360,7 +360,7 @@ count|%d]], 7188, result))
         usage = "/pf",
         label = 32
     },
-    ["da"] = {
+    ["abso"] = {
         func = function(num)
             local count = tonumber(num)
             if count then
@@ -368,10 +368,10 @@ count|%d]], 7188, result))
                 drop(17240, count, facing, x, y)
                 return
             end
-            console("Usage : /da `9<amount>", 1)
+            console("Usage : /abso `9<amount>", 1)
         end,
         desc = "Shortcut Dropping Absolute Lock",
-        usage = "/da <`2amount``>",
+        usage = "/abso <`2amount``>",
         label = 17240
     },
     ['dall'] = {
