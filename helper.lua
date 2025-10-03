@@ -90,7 +90,7 @@ local NOTIFIER_ITEM_NAMES = {
     [242] = "World Lock",
     [1796] = "Diamond Lock",
     [7188] = "Blue Gem Lock",
-    [16990] = "Absolute Lock"
+    [17240] = "Absolute Lock"
 }
 
 function state(z, x, y)
@@ -372,7 +372,7 @@ count|%d]], 7188, result))
         end,
         desc = "Shortcut Dropping Absolute Lock",
         usage = "/da <`2amount``>",
-        label = 16990
+        label = 17240
     },
     ['dall'] = {
         func = function()
@@ -599,11 +599,11 @@ function onvariant(v)
             local num = tonumber(string.match(v[2]:gsub("`.", ""), "(%d+)%!"))
             local reme_result = calculateReme(num)
             pname = getplayers(v[1]):gsub("%[.-%]", "")
-            SendVarlist({[0] = "OnNameChanged", [1] = pname .. " [`1 REME : " .. tostring(reme_result) .. "``]", netid = v[1]})
+            SendVarlist({[0] = "OnNameChanged", [1] = pname .. "[`1 REME : " .. tostring(reme_result) .. "``]", netid = v[1]})
             SendVarlist({
                 [0] = "OnTalkBubble",
                 [1] = v[1],
-                [2] = v[2] .. " `7[`2REME : `w" .. tostring(reme_result) .. "``]",
+                [2] = v[2] .. " `9[`4REME : `9" .. tostring(reme_result) .. "```9]",
                 [3] = v[3],
                 netid = -1
             })
@@ -683,7 +683,7 @@ add_smalltext|https://dsc.gg/nov4community|left|
 add_spacer|small|
 add_label_with_icon|small| What's New? PATCH : [`403/10/2025]``]|left|6124|
 add_spacer|small|
-add_smalltext|[+] Change Many Command! Check at /sc|left|
+add_smalltext|[+] Check /sc to see commands|left|
 add_smalltext|[+] Lock Collect Notifier is now always ON|left|
 add_smalltext|[+] Auto calculate x for leme or reme use /wx (bet) (x)|left| 
 add_spacer|small|
